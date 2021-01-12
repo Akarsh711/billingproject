@@ -7,7 +7,7 @@ class Student(models.Model):
     rollno = models.IntegerField()
     
     def __str__(self):
-        return f'{self.name}:{self.rollno}'
+        return f'rollno:{self.rollno}'
     
 class StudentFeesDetail(models.Model):
     fees =models.IntegerField()
@@ -16,7 +16,7 @@ class StudentFeesDetail(models.Model):
     pay_date=models.DateTimeField()
     
     def __str__(self):
-        return f'{self.pay_date}'
+        return f'this is id - {self.id}'
     
 
 class StudentDetail(models.Model):

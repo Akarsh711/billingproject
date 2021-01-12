@@ -1,0 +1,12 @@
+<html>
+<head>
+</head>
+	<body>
+		<form method="POST" action="/add_student">
+			{%csrf_token%}
+			<input name="name" placeholder="enter your name">
+			<input name="rollnumber" placeholder="enter your rollnumber"> 
+			<button>Submit Your Detail</button>
+		</form>
+	</body>
+</html>

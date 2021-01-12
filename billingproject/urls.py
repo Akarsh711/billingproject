@@ -21,4 +21,10 @@ urlpatterns = [
     path('tadmin/', admin.site.urls),
     path('',views.home),
     path('form', views.form),
+
+    # CRUD
+    path('student_detail/<str:slug>',views.student_detail),
+    path('add_student', views.add_student),
+    path('delete_student', views.delete_student),
+
 ]

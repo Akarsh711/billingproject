@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+	<body>
+		<form method="POST" action="/delete_student">
+			{%csrf_token%}
+			<input name="rollnumber" placeholder="enter rollnumber to delete"> 
+			<button>Submit To Delete</button>
+		</form>
+	</body>
+</html>
