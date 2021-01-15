@@ -26,5 +26,5 @@ urlpatterns = [
     path('student_detail/<str:slug>',views.student_detail),
     path('add_student', views.add_student),
     path('delete_student', views.delete_student),
-
+    path('update_student/<str:slug>', views.update_student),
 ]

@@ -3,7 +3,6 @@ from .models import Student
 # Create your views here.
 
 
-
 def home(request):
     obj = Student.objects.all()
     obj = obj[2]
@@ -53,3 +52,19 @@ def delete_student(request):
         obj.delete()
         return HttpResponse('User Deleted Successfully sayad')
     return render(request, 'delete-student.html')
+
+def update_student(request, slug):
+    if request.method == "POST":
+        stu_name = request.POST.get('name')
+        print(stu_name)
+        rollno = request.POST.get('rollnumber')
+        
+        obj = Student.objects.get(rollno = slug)
+        obj.name = stu_name
+        obj.rollno = rollno
+        obj.save()
+        # filter = [list of objects]
+        # get = single object
+        return HttpResponse("updated successfully")
+    obj = Student.objects.filter(rollno = slug)
+    return render(request, 'update-form.html', {"data":obj})

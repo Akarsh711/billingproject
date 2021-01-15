@@ -1,0 +1,12 @@
+<html>
+<head>
+</head>
+	<body>
+		<form method="POST" action="/update_student/{{data.0.rollno}}">
+			{%csrf_token%}
+			<input name="name" value="{{data.0.name}}" placeholder="enter your name">
+			<input name="rollnumber"  value="{{data.0.rollno}}" placeholder="enter your rollnumber"> 
+			<button>Update Your Detail</button>
+		</form>
+	</body>
+</html>
