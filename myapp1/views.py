@@ -4,11 +4,8 @@ from .models import Student
 
 
 def home(request):
-    obj = Student.objects.all()
-    obj = obj[2]
-    name = obj.name
-    obj2 = dir(obj)
-    return render(request, 'tam.html', {'tamobj':name})
+
+    return render(request, 'index.html')
 
 def form(request):
     name = request.POST.get('name1')
@@ -30,7 +27,7 @@ def add_student(request):
         obj.save()
 
         return HttpResponse(f'stu_roll:{stu_roll}')
-    return render(request, 'add-student.html')
+    return render(request, 'basic-form.html')
    
 
 # RETRIVE
