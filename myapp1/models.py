@@ -1,18 +1,29 @@
 from django.db import models
 
+class studentCourse(models.Model):
+    course=models.CharField(max_length = 23)
+    fees=models.IntegerField()
+    
+
+
 # Create your models here.
 class Student(models.Model):
     # id = models.IntgerField(primary_key = True) 
     name = models.CharField(max_length = 23)
     rollno = models.IntegerField()
     
+    
+    
     def __str__(self):
         return f'rollno:{self.rollno}'
     
 class StudentFeesDetail(models.Model):
+    tutionFee=models.ForeignKey(studentCourse,on_delete=models.CASCADE)
+    maintenanceCharges1=models.IntegerField()
+    examFee=models.IntegerField()
+    libraryCharges=models.IntegerField()
+    totalFee=models.IntegerField()
     fees =models.IntegerField()
-    due_fees =models.IntegerField()
-    due_date =models.DateTimeField()
     pay_date=models.DateTimeField()
     
     def __str__(self):
@@ -27,7 +38,9 @@ class StudentDetail(models.Model):
     m_name= models.CharField(max_length = 23)
     dateOfBirth = models.DateTimeField()
     address = models.TextField()
+
     fees = models.ForeignKey(StudentFeesDetail, on_delete=models.CASCADE)
+    
     
 
     
