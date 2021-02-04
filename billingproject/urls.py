@@ -24,7 +24,10 @@ urlpatterns = [
 
     # CRUD
     path('student_detail/<str:slug>',views.student_detail),
-    path('add_student', views.add_student),
+    path('add_student2', views.add_student),
     path('delete_student', views.delete_student),
     path('update_student/<str:slug>', views.update_student),
+    path('add_student',views.add_detail),
+    path('emp_detail',views.emp_details),
+    path('update2_stu',views.update_stu),
 ]

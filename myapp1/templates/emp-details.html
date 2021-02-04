@@ -14,10 +14,10 @@
                 
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action="/add_student">
+                <form method="POST" action="/emp_detail">
                   <div class="card">
                     <div class="card-header">
-                      <h4>ADD STUDENT DETAILS</h4>{%csrf_token%}
+                      <h4>ADD EMPLOYEE DETAILS</h4>{%csrf_token%}
                     </div>
                     
                     <div class="card-body">
@@ -28,9 +28,9 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Roll no.</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Employee Id</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="inputEmail3" placeholder="Roll No." name="rollno">
+                          <input type="number" class="form-control" id="inputEmail3" placeholder="Id" name="e_Id">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -40,15 +40,25 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Mother's Name</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Age</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Mother's Name" name="m_name">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Age" name="e_age">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Father's Name</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Gender</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Father's Name" name="f_name">
+                          
+                          <input type="radio" class="form-control" id="Male" placeholder="male" name="gender">
+                          <label for="Male">Male</label>
+                          <br>
+                          <input type="radio" class="form-control" id="female" placeholder="female" name="gender">
+                          <label for="female">Female</label>
+                          <br>
+                          <input type="radio" class="form-control" id="other" placeholder="other" name="gender">
+                          <label for="other">Other</label>
+                          <br>
+
                         </div>
                       </div>
                       <div class="form-group row">
@@ -61,6 +71,12 @@
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Address</label>
                         <div class="col-sm-9">
                           <input type="text" class="form-control" id="inputEmail3" placeholder="Address" name="address">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Salary</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Salary" name="salary">
                         </div>
                       </div>
 
@@ -98,12 +114,6 @@
                     </div>
                   </div>
                 </form>
-                <form method="POST" action="/update2_stu">
-                  <div class="search-element">
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200" style="width: 200px;">
-                  </div>
-                </form>
-                </div>
               </div>
             </div>
           </div>

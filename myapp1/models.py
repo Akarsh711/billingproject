@@ -19,11 +19,10 @@ class Student(models.Model):
     
 class StudentFeesDetail(models.Model):
     tutionFee=models.ForeignKey(studentCourse,on_delete=models.CASCADE)
-    maintenanceCharges1=models.IntegerField()
-    examFee=models.IntegerField()
-    libraryCharges=models.IntegerField()
+    maintenanceCharges1=models.IntegerField(null=True)
+    examFee=models.IntegerField(null=True)
+    libraryCharges=models.IntegerField(null=True)
     totalFee=models.IntegerField()
-    fees =models.IntegerField()
     pay_date=models.DateTimeField()
     
     def __str__(self):
@@ -39,8 +38,16 @@ class StudentDetail(models.Model):
     dateOfBirth = models.DateTimeField()
     address = models.TextField()
 
-    fees = models.ForeignKey(StudentFeesDetail, on_delete=models.CASCADE)
-    
+    #fees = models.ForeignKey(StudentFeesDetail, on_delete=models.CASCADE)
+class Employee(models.Model):
+    name=models.CharField(max_length=25)
+    e_id=models.IntegerField()
+    gender=models.CharField(max_length=10)
+    age=models.CharField(max_length=25)
+    address=models.CharField(max_length=25)
+    #dob=models.DateTimeField()
+    salary=models.CharField(max_length=25)
+   # email=models.CharField(max_length=25)
     
 
     
