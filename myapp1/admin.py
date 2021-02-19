@@ -7,6 +7,7 @@ from .models import*
 # Register your models here.
 admin.site.register(Student)
 admin.site.register(StudentFeesDetail)
-admin.site.register(StudentDetail)
-admin.site.register(studentCourse)
+admin.site.register(Course)
 admin.site.register(Employee)
+admin.site.register(Branch)
+admin.site.register(BranchFees)

@@ -1,12 +1,15 @@
 from django.shortcuts import render, HttpResponse
-from .models import Student,StudentDetail,Employee
+from .models import Student,Employee
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
 
 def home(request):
-
-    return render(request, 'index.html')
+    if request.user.is_authenticated :
+        return render(request, 'index.html')
+    else :
+        return HttpResponse('please login')
 
 def form(request):
     name = request.POST.get('name1')
@@ -81,6 +84,7 @@ def add_detail(request):
         obj.save()
         return HttpResponse('added successfully')
     return render(request,'basic-form.html')
+
 def emp_details(request):
     if request.method=='POST':
         name=request.POST.get('name')
@@ -95,11 +99,47 @@ def emp_details(request):
         obj.save()
         return HttpResponse('added successfully')
     return render(request,'emp-details.html')
+
 def update_stu(request):
     if request.method=='POST':
-        rollno=request.POST.get('rollnumber')
-        obj=Student.objects.get(rollno)
+        roll_no=request.POST.get('search')
+        obj=StudentDetail.objects.filter(rollno=roll_no).first()
+        return render(request,'basic-form.html',{'tam':obj, 'url':"/update3"})
+    return render(request,'basic-form.html')
+
+def update3(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        rollno=request.POST.get('rollno')
+        f_name= request.POST.get('f_name')
+        m_name= request.POST.get('m_name')
+        address = request.POST.get('address')
+        dateOfBirth=request.POST.get('dob')
+        roll_no1=request.POST.get('rollno1')
+        print(rollno)
+        obj=StudentDetail.objects.filter(rollno=roll_no1).first()
         obj.rollno=rollno
+        obj.f_name=f_name
+        obj.m_name=m_name
+        obj.address=address
+        obj.dob=dateOfBirth
+        obj.name=name
         obj.save()
         return HttpResponse('data is updated successfully')
-    return render(request,'basic-form.html')
+
+def loginuser(request):
+    if request.method=='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        user=authenticate(request, username=username, password=password)
+        if user==None:
+            return HttpResponse('please enter correct details')
+        else :
+            login(request, user)
+            return HttpResponse('login successfully')
+
+    return render(request,'user-login.html')
+
+def logoutuser(request):
+    logout(request)
+    return HttpResponse('logout successfully')

@@ -1,24 +1,26 @@
 from django.db import models
 
-class studentCourse(models.Model):
-    course=models.CharField(max_length = 23)
-    fees=models.IntegerField()
-    
+class Course(models.Model):
+    course_name=models.CharField(max_length = 23)
 
-
-# Create your models here.
-class Student(models.Model):
-    # id = models.IntgerField(primary_key = True) 
-    name = models.CharField(max_length = 23)
-    rollno = models.IntegerField()
-    
-    
-    
     def __str__(self):
-        return f'rollno:{self.rollno}'
-    
+        return self.course_name
+
+
+class Branch(models.Model):
+    branch_name=models.CharField(max_length=30)
+    course_name=models.ForeignKey(Course, on_delete=models.CASCADE)
+    def __str__(self):
+
+        return self.branch_name
+
+class BranchFees(models.Model):
+    fees=models.IntegerField(null=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+
 class StudentFeesDetail(models.Model):
-    tutionFee=models.ForeignKey(studentCourse,on_delete=models.CASCADE)
+    tutionFee=models.ForeignKey(Course,on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete = models.CASCADE, null=True)
     maintenanceCharges1=models.IntegerField(null=True)
     examFee=models.IntegerField(null=True)
     libraryCharges=models.IntegerField(null=True)
@@ -29,7 +31,9 @@ class StudentFeesDetail(models.Model):
         return f'this is id - {self.id}'
     
 
-class StudentDetail(models.Model):
+
+# Create your models here.
+class Student(models.Model):
     name = models.CharField(max_length = 23)
     rollno = models.IntegerField()
     stu_class = models.CharField(max_length = 23)
@@ -37,6 +41,16 @@ class StudentDetail(models.Model):
     m_name= models.CharField(max_length = 23)
     dateOfBirth = models.DateTimeField()
     address = models.TextField()
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    fees = models.ForeignKey(StudentFeesDetail, on_delete=models.CASCADE)
+        
+    def __str__(self):
+        return f'rollno:{self.rollno}'
+    
+
+
+#class StudentDetail(models.Model):
+  
 
     #fees = models.ForeignKey(StudentFeesDetail, on_delete=models.CASCADE)
 class Employee(models.Model):
