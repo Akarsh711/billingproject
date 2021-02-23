@@ -14,27 +14,90 @@
                 
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action="{{url}}" >
+                <form method="POST" action=/fees_form >
                   <div class="card">
                     <div class="card-header">
-                      <h4>ADD STUDENT DETAILS</h4>{%csrf_token%}
-                      <input name ='rollno1' value= "{{tam.rollno}}" type='hidden'>
+                      <h4>{{student_detail.name}}'s Fee Summary</h4>{%csrf_token%}
                     </div>
                     
                     <div class="card-body">
-                      <div class="form-group row">
+                    	<div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Name</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Name" name="name" value="{{tam.name}}">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Name" name="name" value="{{student_detail.name}}">
                         </div>
                     </div>
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Roll no.</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="inputEmail3" placeholder="Roll No." name="rollno" value="{{tam.rollno}}">
+                          <input type="number" class="form-control" id="inputEmail3" placeholder="Roll No." name="rollno" value="{{student_detail.rollno}}">
+                        </div>
+                      </div>
+                    
+                     
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Father's Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Father's Name" name="f_name" value="{{student_detail.f_name}}">
                         </div>
                       </div>
                       <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Date Of Birth</label>
+                        <div class="col-sm-9">
+                          <input type="Date" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{student_detail.dateOfBirth}}">
+                        </div>
+                      </div>
+                     </div>
+
+                     <div class="card-body">
+
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Fees</label>
+                        <div class="col-sm-9">
+                          <input type="text" id="fees" class="form-control" id="inputEmail3" placeholder="Fees" name="rollno" value="{{fees_detail.fees}}">
+                        </div>
+                   	  </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tution Fees</label>
+                        <div class="col-sm-9">
+                          <input type="text" id="tution_fees" class="form-control" id="inputEmail3" placeholder="Enter the Tution Fees" name="rollno" value="{{fees_detail.tution_fees}}">
+                        </div>
+                     </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Exam Fees</label>
+                        <div class="col-sm-9">
+                          <input type="text" id="examination_fees" class="form-control" id="inputEmail3" placeholder="Examination Fees" name="rollno" value="{{fees_detail.exam_fees}}">
+                        </div>
+                      </div>
+                	</div>
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Library Charges</label>
+                        <div class="col-sm-9">
+                          <input type="text" id="library_charges" class="form-control" id="inputEmail3" placeholder="Library Fees" name="rollno" value="{{fees_detail.library_charges}}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label for="inputEmail3" id="late_charges" class="col-sm-3 col-form-label">Late Charge Charges</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Late Fine" name="rollno" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Total</label>
+                        <div class="col-sm-9">
+                          <input type="text" id="total" class="form-control" id="inputEmail3" placeholder="Total " name="total" value="{{total}}">
+                        </div>
+                      </div>
+                    </div>
+
+                      <!-- <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
                           <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" >
@@ -64,29 +127,7 @@
                           <input type="text" class="form-control" id="inputEmail3" placeholder="Address" name="address" value="{{tam.address}}">
                         </div>
                       </div>
-
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Course</label>
-                        <div class="col-sm-9">
-                         <select class="custom-select" name="Course"> 
-                          {% for i in courses %}
-                            <option value="{{i.id}}">{{i.course_name}}</option>
-                          {% endfor %}
-                         </select>
-                        </div>
-                      </div>
-
-                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
-                         <select class="custom-select" name="Branch"> 
-                            {% for i in branches %}
-                            <option value="{{i.id}}">{{i.branch_name}}</option>
-                          {% endfor %}
-                         </select>
-                        </div>
-                      </div>
-
+ -->
                       <!--<fieldset class="form-group">
                         <div class="row">
                           <div class="col-form-label col-sm-3 pt-0">Radios</div>
@@ -120,14 +161,11 @@
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                   </div>
-
                 </form>
-                
                 </div>
               </div>
             </div>
           </div>
-
         </section>
 
         <div class="settingSidebar">
@@ -231,4 +269,43 @@
       </footer>
     </div>
   </div>
+
+  <!-- <script>
+  	
+  	document.getElementById('fees').addEventListener("change",
+  	 function(){
+  	 	var fees = this.value;
+  	 	total();
+  	 });
+
+  	document.getElementById('tution_fees').addEventListener("change", 
+  		function(){
+  			var tution_fees = this.value;
+  			total();
+  		});
+
+  	document.getElementById('examination_fees').addEventListener("change", 
+  		function(){
+  			var exam_fees = this.value;
+  			total();
+  		});
+
+  	document.getElementById('library_charges').addEventListener("change", 
+  		function(){
+  			var library_charges = this.value;
+  			total();
+  		});
+
+  	document.getElementById('late_charges').addEventListener("change", 
+  		function(){
+  			var latecharges = this.value;
+  			total();
+  		});
+  	
+  	function total(){
+  		total = fees.value + tution_fees.value + examination_fees.value + library_charges.value + latecharges.value;
+  		alert(total); 
+  	}
+  
+  </script> -->
 {% endblock %}

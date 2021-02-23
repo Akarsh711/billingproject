@@ -33,4 +33,7 @@ urlpatterns = [
     path('update3',views.update3),
     path('userlogin',views.loginuser),
     path('logoutuser',views.logoutuser),
+
+    # Fees Pay Urls
+    path('fees_form' ,views.fees_form),
 ]

@@ -1,9 +1,11 @@
 from django.shortcuts import render, HttpResponse
-from .models import Student,Employee
+from .models import *
 from django.contrib.auth import authenticate,login,logout
 
-# Create your views here.
-
+# TODO 
+    # Put Ajax
+    # Pay Fees
+    # Resolve Date Null
 
 def home(request):
     if request.user.is_authenticated :
@@ -31,6 +33,7 @@ def add_student(request):
         obj.save()
 
         return HttpResponse(f'stu_roll:{stu_roll}')
+
     return render(request, 'basic-form.html')
    
 
@@ -71,20 +74,6 @@ def update_student(request, slug):
     return render(request, 'update-form.html', {"data":obj})
 
 
-def add_detail(request):
-    if request.method=='POST':
-        name=request.POST.get('name')
-        rollno=request.POST.get('rollno')
-        email=request.POST.get('email')
-        fname=request.POST.get('f_name')
-        mname=request.POST.get('m_name')
-        address=request.POST.get('address')
-        dob=request.POST.get('dob')
-        obj=StudentDetail(name=name,rollno=rollno,f_name=fname,m_name=mname,address=address,dateOfBirth=dob,stu_class='1' )
-        obj.save()
-        return HttpResponse('added successfully')
-    return render(request,'basic-form.html')
-
 def emp_details(request):
     if request.method=='POST':
         name=request.POST.get('name')
@@ -100,32 +89,69 @@ def emp_details(request):
         return HttpResponse('added successfully')
     return render(request,'emp-details.html')
 
+
+def add_detail(request):
+    if request.method=='POST':
+        # TODO 
+            # Add Roll Number Check
+        name=request.POST.get('name')
+        rollno=request.POST.get('rollno')
+        email=request.POST.get('email')
+        fname=request.POST.get('f_name')
+        mname=request.POST.get('m_name')
+        address=request.POST.get('address')
+        dob=request.POST.get('dob')
+        branch_id = request.POST.get('Branch')
+        branch = Branch.objects.filter(id=branch_id).first()
+        print('...........', branch)
+        obj=Student(name=name,rollno=rollno,email=email,f_name=fname,m_name=mname,address=address,dateOfBirth=dob,stu_class='1', branch=branch )
+        obj.save()
+        return HttpResponse('added successfully')
+
+    courses = Course.objects.all()
+    branches = Branch.objects.filter(course_name=courses[0])
+    return render(request,'basic-form.html', {'courses':courses, 'branches':branches})
+
+
 def update_stu(request):
     if request.method=='POST':
         roll_no=request.POST.get('search')
-        obj=StudentDetail.objects.filter(rollno=roll_no).first()
-        return render(request,'basic-form.html',{'tam':obj, 'url':"/update3"})
+        obj=Student.objects.filter(rollno=roll_no).first()
+        courses = Course.objects.all()
+        branches = Branch.objects.filter(course_name=courses[0])
+        return render(request,'update-student-form.html',{'tam':obj, 
+                                                        'courses':courses,
+                                                        'branches':branches,
+                                                        'selected_branch':obj.branch,
+                                                        'selected_course':obj.branch.course_name, 
+                                                         'url':"/update3"})
     return render(request,'basic-form.html')
+
 
 def update3(request):
     if request.method=='POST':
         name=request.POST.get('name')
         rollno=request.POST.get('rollno')
-        f_name= request.POST.get('f_name')
-        m_name= request.POST.get('m_name')
-        address = request.POST.get('address')
-        dateOfBirth=request.POST.get('dob')
-        roll_no1=request.POST.get('rollno1')
-        print(rollno)
-        obj=StudentDetail.objects.filter(rollno=roll_no1).first()
-        obj.rollno=rollno
-        obj.f_name=f_name
-        obj.m_name=m_name
-        obj.address=address
-        obj.dob=dateOfBirth
+        email=request.POST.get('email')
+        fname=request.POST.get('f_name')
+        mname=request.POST.get('m_name')
+        address=request.POST.get('address')
+        dob=request.POST.get('dob')
+        branch_id = request.POST.get('Branch')
+        branch = Branch.objects.filter(id=branch_id).first()
+
+        obj=Student.objects.filter(rollno=rollno).first()
         obj.name=name
+        obj.rollno=rollno
+        obj.email=email
+        obj.f_name=fname
+        obj.m_name=mname
+        obj.address=address
+        obj.dob=dob
+        obj.branch=branch
         obj.save()
         return HttpResponse('data is updated successfully')
+
 
 def loginuser(request):
     if request.method=='POST':
@@ -134,12 +160,39 @@ def loginuser(request):
         user=authenticate(request, username=username, password=password)
         if user==None:
             return HttpResponse('please enter correct details')
-        else :
+        else:
             login(request, user)
             return HttpResponse('login successfully')
-
     return render(request,'user-login.html')
+
 
 def logoutuser(request):
     logout(request)
     return HttpResponse('logout successfully')
+
+
+def fees_form(request):
+    if request.method =='POST':
+        roll_no = request.POST.get('rollno')
+        branch = request.POST.get('Branch')
+        course = request.POST.get('Course')
+        obj1 = BranchFees.objects.filter(branch__id = branch).first()
+        total = obj1.fees + obj1.tution_fees + obj1.exam_fees + obj1.library_charges
+        obj2 = Student.objects.filter(rollno = roll_no).first()
+        return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
+    courses = Course.objects.all()
+    branches = Branch.objects.all()
+    return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
+
+# def pay_fees(request):
+#     if request.method == 'POST':
+#         name 
+#         rollno 
+#         f_name 
+#         dob 
+#         fees  
+#         tution_fees
+#         exam_fees
+#         libray_charges
+#         late_charges 
+#         total 

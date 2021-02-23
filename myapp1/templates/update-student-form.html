@@ -37,7 +37,7 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                          <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" >
+                          <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" value="{{tam.email}}">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -70,18 +70,26 @@
                         <div class="col-sm-9">
                          <select class="custom-select" name="Course"> 
                           {% for i in courses %}
-                            <option value="{{i.id}}">{{i.course_name}}</option>
+                            {% if i.id == selected_course.id %}
+                              <option value="{i.id}" selected>{{i.course_name}}</option>
+                            {% else %}
+                              <option value="{{i.id}}">{{i.course_name}}</option>
+                            {% endif %}
                           {% endfor %}
                          </select>
                         </div>
                       </div>
 
-                       <div class="form-group row">
+                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Branch</label>
                         <div class="col-sm-9">
                          <select class="custom-select" name="Branch"> 
-                            {% for i in branches %}
-                            <option value="{{i.id}}">{{i.branch_name}}</option>
+                          {% for i in branches %}
+                            {% if i.id == selected_course.id %}
+                              <option value="{i.id}" selected>{{i.branch_name}}</option>
+                            {% else %}
+                              <option value="{{i.id}}">{{i.branch_name}}</option>
+                            {% endif %}
                           {% endfor %}
                          </select>
                         </div>
@@ -120,9 +128,7 @@
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                   </div>
-
                 </form>
-                
                 </div>
               </div>
             </div>
@@ -224,7 +230,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          <a href="templateshub.net">Templateshub</a></a>
+          <a>Created by -Tamanna Kamboj</a></a>
         </div>
         <div class="footer-right">
         </div>
