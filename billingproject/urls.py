@@ -36,4 +36,5 @@ urlpatterns = [
 
     # Fees Pay Urls
     path('fees_form' ,views.fees_form),
+    path('pay_fees', views.pay_fees),
 ]

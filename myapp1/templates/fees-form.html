@@ -14,7 +14,7 @@
                 
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action=/fees_form >
+                <form method="POST" action=/pay_fees >
                   <div class="card">
                     <div class="card-header">
                       <h4>{{student_detail.name}}'s Fee Summary</h4>{%csrf_token%}
@@ -54,13 +54,13 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Fees</label>
                         <div class="col-sm-9">
-                          <input type="text" id="fees" class="form-control" id="inputEmail3" placeholder="Fees" name="rollno" value="{{fees_detail.fees}}">
+                          <input type="text" id="fees" class="form-control" id="inputEmail3" placeholder="Fees" name="fees" value="{{fees_detail.fees}}">
                         </div>
                    	  </div>
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tution Fees</label>
                         <div class="col-sm-9">
-                          <input type="text" id="tution_fees" class="form-control" id="inputEmail3" placeholder="Enter the Tution Fees" name="rollno" value="{{fees_detail.tution_fees}}">
+                          <input type="text" id="tution_fees" class="form-control" id="inputEmail3" placeholder="Enter the Tution Fees" name="tution_fees" value="{{fees_detail.tution_fees}}">
                         </div>
                      </div>
                     </div>
@@ -68,7 +68,7 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Exam Fees</label>
                         <div class="col-sm-9">
-                          <input type="text" id="examination_fees" class="form-control" id="inputEmail3" placeholder="Examination Fees" name="rollno" value="{{fees_detail.exam_fees}}">
+                          <input type="text" id="examination_fees" class="form-control" id="inputEmail3" placeholder="Examination Fees" name="exam_fees" value="{{fees_detail.exam_fees}}">
                         </div>
                       </div>
                 	</div>
@@ -76,7 +76,7 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Library Charges</label>
                         <div class="col-sm-9">
-                          <input type="text" id="library_charges" class="form-control" id="inputEmail3" placeholder="Library Fees" name="rollno" value="{{fees_detail.library_charges}}">
+                          <input type="text" id="library_charges" class="form-control" id="inputEmail3" placeholder="Library Fees" name="library_charges" value="{{fees_detail.library_charges}}">
                         </div>
                       </div>
                     </div>
@@ -84,7 +84,7 @@
                       <div class="form-group row">
                         <label for="inputEmail3" id="late_charges" class="col-sm-3 col-form-label">Late Charge Charges</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Late Fine" name="rollno" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Late Fine" name="late_charges" value="">
                         </div>
                       </div>
                     </div>

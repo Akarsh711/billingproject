@@ -184,15 +184,32 @@ def fees_form(request):
     branches = Branch.objects.all()
     return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
 
-# def pay_fees(request):
-#     if request.method == 'POST':
-#         name 
-#         rollno 
-#         f_name 
-#         dob 
-#         fees  
-#         tution_fees
-#         exam_fees
-#         libray_charges
-#         late_charges 
-#         total 
+def pay_fees(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        rollno = request.POST.get('rollno')
+        f_name = request.POST.get('f_name')
+        dob = request.POST.get('dob')
+        fees = request.POST.get('fees')
+        tution_fees = request.POST.get('tution_fees')
+        exam_fees = request.POST.get('exam_fees')
+        library_charges = request.POST.get('library_charges')
+        late_charges = request.POST.get('late_charges')
+        total = request.POST.get('total')
+
+        print('.........',name, rollno, f_name, dob, fees, tution_fees, exam_fees, library_charges, late_charges, total)
+
+        student = Student.objects.filter(rollno= rollno).first()
+        fees_paid = PaidFees()
+        fees_paid.student = student
+        fees_paid.course_fee = fees
+        fees_paid.tution_fee=tution_fees
+        fees_paid.branch = student.branch
+        fees_paid.exam_fee = exam_fees
+        fees_paid.library_charges = library_charges
+        fees_paid.total_fee = total
+        fees_paid.save()
+        return HttpResponse('Fees Successfully Paid')
+    return HttpResponse('Bad Request')
+
+    

@@ -18,26 +18,6 @@ class BranchFees(models.Model):
     library_charges = models.IntegerField(null=True)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
 
-class PaidFees(models.Model):
-    tutionFee=models.ForeignKey(Course,on_delete=models.CASCADE)
-    branch = models.ForeignKey(Branch, on_delete = models.CASCADE, null=True)
-    maintenanceCharges1=models.IntegerField(null=True)
-    examFee=models.IntegerField(null=True)
-    libraryCharges=models.IntegerField(null=True)
-    totalFee=models.IntegerField()
-    pay_date=models.DateTimeField()
-    
-    def __str__(self):
-        return f'this is id - {self.id}'
-    
-# class StudentDetail(models.Model):
-#     name = models.CharField(max_length = 23)
-#     rollno = models.IntegerField()
-#     stu_class = models.CharField(max_length = 23)
-#     f_name= models.CharField(max_length = 23)
-#     m_name= models.CharField(max_length = 23)
-#     dateOfBirth = models.DateTimeField()
-#     address = models.TextField()
 
 class Student(models.Model):
     name = models.CharField(max_length = 23)
@@ -57,6 +37,32 @@ class Student(models.Model):
     
 
 
+class PaidFees(models.Model):
+
+    # name =models.CharField(max_length=45)   
+    # rollno =models.IntegerField(null=True)
+    # f_name =models.CharField(max_length=45)
+    # dob = models.DateTimeField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course_fee = models.IntegerField(null=False)
+    tution_fee=models.IntegerField()
+    branch = models.ForeignKey(Branch, on_delete = models.CASCADE, null=True)
+    exam_fee=models.IntegerField(null=True)
+    library_charges=models.IntegerField(null=True)
+    total_fee=models.IntegerField()
+    pay_date=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'this is id - {self.id}'
+    
+# class StudentDetail(models.Model):
+#     name = models.CharField(max_length = 23)
+#     rollno = models.IntegerField()
+#     stu_class = models.CharField(max_length = 23)
+#     f_name= models.CharField(max_length = 23)
+#     m_name= models.CharField(max_length = 23)
+#     dateOfBirth = models.DateTimeField()
+#     address = models.TextField()
 
 
 
