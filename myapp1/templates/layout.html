@@ -11,6 +11,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{% static 'assets/css/app.min.css'%}">
   <!-- Template CSS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>=-0iud Ion                         
   <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
   <link rel="stylesheet" href="{% static 'assets/css/components.css'%}">
   <!-- Custom style CSS -->
@@ -188,17 +189,17 @@
             </li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Widgets</span></a>
+                  data-feather="briefcase"></i><span>Add or Update a Course</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
-                <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+                <li><a class="nav-link" href="{% url 'add-course'%}">Add a New Course</a></li>
+                <li><a class="nav-link" href="#">Update an Existing Course</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Apps</span></a>
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>New Branch</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="chat.html">Chat</a></li>
-                <li><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                <li><a class="nav-link" href="#">Add A New Branch</a></li>
+                <li><a class="nav-link" href="#">Update Existing Branch Fees</a></li>
                 <li><a class="nav-link" href="blog.html">Blog</a></li>
                 <li><a class="nav-link" href="calendar.html">Calendar</a></li>
               </ul>

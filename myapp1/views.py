@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import *
 from django.contrib.auth import authenticate,login,logout
+from django.http import JsonResponse
 
 # TODO 
     # Put Ajax
@@ -213,3 +214,56 @@ def pay_fees(request):
     return HttpResponse('Bad Request')
 
     
+# Basics
+def add_course(request):
+    if request.method =='POST':
+        course_name = request.POST.get('name')
+        course_duration = request.POST.get('duration')
+        Course(course_name = course_name, duration = course_duration).save()
+        return HttpResponse('added successfully')
+    return render(request, 'course-form.html')
+
+def render_update_course(request):
+    if request.method == 'POST': 
+        id = request.POST.get('Branch')
+        print('........', id)
+        obj = BranchFees.objects.filter(branch__id = id).first()
+        print(obj.fees)
+        return render(request, 'course-form.html', {'course_detail':obj,'type':'update'})
+    obj = Course.objects.all()
+    obj2 = Branch.objects.all()
+    return render(request, 'course-search.html', {'courses':obj, 'branches':obj2, 'type':'update'})
+
+def update_course(request):
+    if request.method == 'POST':
+        fees = request.POST.get('fees')
+        t_fees = request.POST.get('tution_fees')
+        e_fees = request.POST.get('exam_fees')
+        l_charges = request.POST.get('library_charges')
+        b_id = request.POST.get('branch_id')
+        print('///////', b_id)
+        # BranchFees(fees = fees, tution_fees = t_fees, exam_fees=e_fees, library_charges = l_charges, branch__id=b_id).save()
+        obj = BranchFees.objects.filter(branch__id = b_id).first()
+        obj.fees = fees
+        obj.tution_fees = t_fees
+        obj.exam_fees = e_fees
+        obj.library_charges = l_charges
+        obj.save()
+        return HttpResponse('Updated Successfully')
+
+def add_branch(request):
+    return render(request, 'branch-form.html')
+
+def update_branch(request):
+    return render(request, 'branch-form.html')
+
+def branch_search(request):
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        branches = Branch.objects.filter(course_name__id = query)
+        branch_list = []
+        for i in branches :
+            branch_list.append({'name':i.branch_name, 'id':i.id})
+        print('.....list', branch_list)
+        return JsonResponse({'branches':branch_list})
+    return JsonResponse({'error':True})
