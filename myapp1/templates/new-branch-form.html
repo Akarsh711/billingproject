@@ -6,8 +6,8 @@
     
       <!-- Main Content -->
       <div class="main-content">
-        {% if messages%}
-           {% for message in messages %}
+         {% if messages %}
+          {% for message in messages %}
           <div class="alert alert-{{ message.tags }} alert-dismissible show fade">
             <div class="alert-body">
               <button class="close" data-dismiss="alert">
@@ -17,7 +17,7 @@
             </div>
           </div>
           {% endfor %}
-          {% endif %}
+        {% endif %}
         <section class="section">
           <div class="section-body">
             <div class="row">
@@ -25,20 +25,48 @@
                 
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action=/fees_form >
+                <form method="POST" action="{% url 'add-branch' %}">
                   <div class="card">
                     <div class="card-header">
                       <h4>ADD STUDENT DETAILS</h4>{%csrf_token%}
-                      <input name ='rollno1' value= "{{tam.rollno}}" type='hidden'>
                     </div>
                     
                     <div class="card-body">
                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Roll no.</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Branch Name</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Roll Number of Student" name="rollno" value="{{tam.name}}">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="e.g. Btech/Mtech" name="branch_name" value="{{tam.name}}">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Fees</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Fees" name="fees" value="{{course_detail.fees}}">
                         </div>
                     </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Tution Fees</label>
+                        <div class="col-sm-9">
+                          <input type="number" class="form-control" id="inputEmail3" placeholder="Enter Tution Fees" name="tution_fees" value="{{course_detail.tution_fees}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Exam Fees</label>
+                        <div class="col-sm-9">
+                          <input type="number" class="form-control" id="inputEmail3" placeholder="Enter Examination Fees" name="exam_fees" value="{{course_detail.exam_fees}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Library Charges</label>
+                        <div class="col-sm-9">
+                          <input type="number" class="form-control" id="inputEmail3" placeholder="Enter Library Charges" name="library_charges" value="{{course_detail.library_charges}}">
+                        </div>
+                    </div>
+
+                      
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Course</label>
                         <div class="col-sm-9">
@@ -51,77 +79,6 @@
                         </div>
                       </div>
 
-                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
-                         <select class="custom-select" name="Branch" id="branches"> 
-                        <!--     {% for i in branches %}
-                            <option value="{{i.id}}">{{i.branch_name}}</option>
-                          {% endfor %} -->
-                         </select>
-                        </div>
-                      </div>
-
-
-                      <!-- <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
-                        <div class="col-sm-9">
-                          <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" >
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Mother's Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Mother's Name" name="m_name" value="{{tam.m_name}}">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Father's Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Father's Name" name="f_name" value="{{tam.f_name}}">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Date Of Birth</label>
-                        <div class="col-sm-9">
-                          <input type="Date" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{tam.dateOfBirth}}">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Address" name="address" value="{{tam.address}}">
-                        </div>
-                      </div>
- -->
-                      <!--<fieldset class="form-group">
-                        <div class="row">
-                          <div class="col-form-label col-sm-3 pt-0">Radios</div>
-                          <div class="col-sm-9">
-                            <div class="form-check">
-                              <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio3">First Radio</label>
-                              </div>
-                              <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio2">Second Radio</label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </fieldset>-->
-                      <!--<div class="form-group row">
-                        <div class="col-sm-3">Checkbox</div>
-                        <div class="col-sm-9">
-                          <div class="form-check">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck2">
-                              <label class="custom-control-label" for="customCheck2">Example Checkbox</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>-->
                     </div>
                     <div class="card-footer">
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -236,7 +193,7 @@
     </div>
   </div>
 
-  
+  <!-- 
    <script>
     $('#course').change(function(){
           $.ajax({
@@ -271,6 +228,6 @@
             }
         })
     });
-  </script>
+  </script> -->
 
 {% endblock %}

@@ -15,9 +15,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-path('',views.home),
+	path('',views.home),
 	path('add_course', views.add_course, name='add-course'),
-	path('r_update_course', views.render_update_course, name='r-update-course'),
+	path('add_branch', views.add_branch, name='add-branch'),
+	path('add_course_detail', views.add_course_detail, name='add-course-detail'),
+	path('r_update_course', views.render_update_branch, name='r-update-course'),
 	path('update_course', views.update_course, name='update-course'),
 	path('add_branch', views.add_branch, name='add-branch'),
 	path('update_branch', views.update_branch, name='update-branch'),

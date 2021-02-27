@@ -20,7 +20,6 @@ from myapp1 import views
 urlpatterns = [
     path('tadmin/', admin.site.urls),
     path('', include('myapp1.urls')),
-    path('',views.home),
     path('form', views.form),
 
     # CRUD
@@ -36,6 +35,6 @@ urlpatterns = [
     path('logoutuser',views.logoutuser),
 
     # Fees Pay Urls
-    path('fees_form' ,views.fees_form),
+    path('fees_form' ,views.fees_form, name='fees-form'),
     path('pay_fees', views.pay_fees),
 ]

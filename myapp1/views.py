@@ -2,11 +2,15 @@ from django.shortcuts import render, HttpResponse
 from .models import *
 from django.contrib.auth import authenticate,login,logout
 from django.http import JsonResponse
+from django.contrib import messages
+from django.shortcuts import redirect
+
 
 # TODO 
     # Put Ajax
     # Pay Fees
     # Resolve Date Null
+    # put check if student with rollno. exist 
 
 def home(request):
     if request.user.is_authenticated :
@@ -75,6 +79,7 @@ def update_student(request, slug):
     return render(request, 'update-form.html', {"data":obj})
 
 
+
 def emp_details(request):
     if request.method=='POST':
         name=request.POST.get('name')
@@ -118,6 +123,10 @@ def update_stu(request):
     if request.method=='POST':
         roll_no=request.POST.get('search')
         obj=Student.objects.filter(rollno=roll_no).first()
+        if obj == None :
+            print('......chala')
+            messages.error(request, 'Student Not Found')
+            return render(request, 'index.html')
         courses = Course.objects.all()
         branches = Branch.objects.filter(course_name=courses[0])
         return render(request,'update-student-form.html',{'tam':obj, 
@@ -126,7 +135,7 @@ def update_stu(request):
                                                         'selected_branch':obj.branch,
                                                         'selected_course':obj.branch.course_name, 
                                                          'url':"/update3"})
-    return render(request,'basic-form.html')
+    return render(request,'index.html')
 
 
 def update3(request):
@@ -173,18 +182,28 @@ def logoutuser(request):
 
 
 def fees_form(request):
-    if request.method =='POST':
-        roll_no = request.POST.get('rollno')
-        branch = request.POST.get('Branch')
-        course = request.POST.get('Course')
-        obj1 = BranchFees.objects.filter(branch__id = branch).first()
-        total = obj1.fees + obj1.tution_fees + obj1.exam_fees + obj1.library_charges
-        obj2 = Student.objects.filter(rollno = roll_no).first()
-        return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
-    courses = Course.objects.all()
-    branches = Branch.objects.all()
-    return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
+    try:
+        if request.method =='POST':
+            roll_no = request.POST.get('rollno')
+            branch = request.POST.get('Branch')
+            print('.....id', branch)
+            course = request.POST.get('Course')
+            obj1 = BranchFees.objects.filter(branch__id = branch).first()
+            total = obj1.fees + obj1.tution_fees + obj1.exam_fees + obj1.library_charges
+            obj2 = Student.objects.filter(rollno = roll_no).filter(branch = obj1.branch).first()
+            if obj2 == None:
+                print('dfdfd')
+                courses = Course.objects.all()
+                branches = Branch.objects.all()
+                messages.error(request,'Student Not Found')
+                return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
 
+            return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
+        courses = Course.objects.all()
+        branches = Branch.objects.all()
+        return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
+    except:
+        return HttpResponse('Wrong Input Passed')
 def pay_fees(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -214,25 +233,50 @@ def pay_fees(request):
     return HttpResponse('Bad Request')
 
     
-# Basics
+# Basic
 def add_course(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        duration = request.POST.get('duration')
+        Course(course_name = name, duration = duration).save()
+        messages.success(request, 'Course Added Successfully')
+        return render(request, 'test.html')
+    return render(request, 'test.html')
+
+def add_branch(request):
+    if request.method == 'POST':
+        branch_name = request.POST.get('branch_name')
+        fees = request.POST.get('fees')
+        tution_fees = request.POST.get('tution_fees')
+        exam_fees = request.POST.get('exam_fees')
+        library_charges = request.POST.get('library_charges')
+        course_id = request.POST.get('Course')
+        course = Course.objects.filter(id = course_id).first()
+        b = Branch(branch_name = branch_name, course_name = course)
+        b.save()
+        BranchFees(fees = fees, tution_fees = tution_fees, exam_fees = exam_fees, library_charges = library_charges, branch=b).save()
+        messages.success(request, 'Added Successfully')
+        return render(request, 'new-branch-form.html')
+    course = Course.objects.all()
+    return render(request, 'new-branch-form.html', {'courses':course})
+
+def add_course_detail(request):
     if request.method =='POST':
         course_name = request.POST.get('name')
         course_duration = request.POST.get('duration')
         Course(course_name = course_name, duration = course_duration).save()
         return HttpResponse('added successfully')
-    return render(request, 'course-form.html')
+    branch = Branch.objects.all()
+    return render(request, 'course-form.html', {'branches':branch})
 
-def render_update_course(request):
+def render_update_branch(request):
     if request.method == 'POST': 
         id = request.POST.get('Branch')
-        print('........', id)
         obj = BranchFees.objects.filter(branch__id = id).first()
-        print(obj.fees)
-        return render(request, 'course-form.html', {'course_detail':obj,'type':'update'})
+        return render(request, 'branch-detail-form.html', {'course_detail':obj,'type':'update'})
     obj = Course.objects.all()
     obj2 = Branch.objects.all()
-    return render(request, 'course-search.html', {'courses':obj, 'branches':obj2, 'type':'update'})
+    return render(request, 'branch-search.html', {'courses':obj, 'branches':obj2, 'type':'update'})
 
 def update_course(request):
     if request.method == 'POST':
@@ -251,8 +295,8 @@ def update_course(request):
         obj.save()
         return HttpResponse('Updated Successfully')
 
-def add_branch(request):
-    return render(request, 'branch-form.html')
+# def add_branch(request):
+#     return render(request, 'branch-form.html')
 
 def update_branch(request):
     return render(request, 'branch-form.html')

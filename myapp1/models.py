@@ -22,7 +22,7 @@ class BranchFees(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length = 23)
-    rollno = models.IntegerField(unique=True)
+    rollno = models.IntegerField()
     email = models.CharField(max_length = 23)
     stu_class = models.CharField(max_length = 23)
     f_name= models.CharField(max_length = 23)
