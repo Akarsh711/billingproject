@@ -197,7 +197,6 @@ def fees_form(request):
                 branches = Branch.objects.all()
                 messages.error(request,'Student Not Found')
                 return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
-
             return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
         courses = Course.objects.all()
         branches = Branch.objects.all()

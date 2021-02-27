@@ -20,6 +20,7 @@ from myapp1 import views
 urlpatterns = [
     path('tadmin/', admin.site.urls),
     path('', include('myapp1.urls')),
+    path('emp/', include('employee.urls')),
     path('form', views.form),
 
     # CRUD
