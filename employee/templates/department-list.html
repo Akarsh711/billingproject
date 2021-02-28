@@ -2,8 +2,11 @@
 {% load static %}
 
 {% block body %}
-
-    
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      
       
       <!-- Main Content -->
       <div class="main-content">
@@ -14,83 +17,52 @@
               <button class="close" data-dismiss="alert">
                 <span>&times;</span>
               </button>
-               {{message}}
+               {{message}}what!
             </div>
           </div>
           {% endfor %}
         {% endif %}
-        <section class="section">
-          <div class="section-body">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6">
-                
-              </div>
-              <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action="{% url 'add-employee'%}">
-                  <div class="card">
-                    <div class="card-header">
-                      <h4>ADD Employee Details</h4>{%csrf_token%}
-                    </div>
+        
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Department List</h4>
+                  <div class="card-header-form">
                     
-                    <div class="card-body">
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="name" value="">
-                        </div>
-                      </div>
-                         <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Father's Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="f_name" value="">
-                        </div>
-                      </div>
-                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Date Of Birth</label>
-                        <div class="col-sm-9">
-                          <input type="Date" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{tam.dateOfBirth}}">
-                        </div>
-                      </div>
-                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
-                        <div class="col-sm-9">
-                         <select class="custom-select" name="Department" id="department"> 
-                          <option value="" selected>__</option>
-                          {% for i in departments %}
-                            <option value="{{i.id}}">{{i.name}}</option>
-                          {% endfor %}
-                         </select>
-                        </div>
-                      </div>
-                       <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Designation</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="designation" value="">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Salary</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="salary" value="">
-                        </div>
-                        <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label" >Address</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="address" value="">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
                   </div>
-                </form>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th class="text-center">
+                          Id
+                          </div>
+                        </th>
+                        <th> Name</th>
+                        <th>Delete A Department</th>
+                        <!-- <th>Task Status</th>
+                        <th>Assigh Date</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Action</th> -->
+                      </tr>
+                      {% for i in departments%}
+                      <tr>
+                        <td class="p-0 text-center"> 
+                          {{i.id}}
+                        </td>
+                        <td>{{i.name}}</td>
+                        <td><a href="{% url 'delete-department' i.id%}" class="btn btn-outline-danger">Delete</a></td>
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-
         <div class="settingSidebar">
           <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
           </a>
@@ -176,7 +148,7 @@
               </div>
               <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
                 <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                  <i class="fas fa-undo"></i> Restore Default
+                  <i class="fas fa-undo"></i> Restore Defalult
                 </a>
               </div>
             </div>
@@ -192,4 +164,5 @@
       </footer>
     </div>
   </div>
+ 
 {% endblock %}

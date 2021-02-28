@@ -11,6 +11,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{% static 'assets/css/app.min.css'%}">
   <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'assets/bundles/pretty-checkbox/pretty-checkbox.min.css'%}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>=-0iud Ion                         
   <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
   <link rel="stylesheet" href="{% static 'assets/css/components.css'%}">
@@ -32,7 +33,7 @@
                 <i data-feather="maximize"></i>
               </a></li>
             <li>
-              <form class="form-inline mr-auto" action ='/update2_stu' method='POST'>
+              <form class="form-inline mr-auto" action ='/update2_stu' method='POST' id='search_form'>
                 {%csrf_token%}
                 <div class="search-element">
                   <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search" data-width="200">
@@ -40,10 +41,17 @@
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
+                <div class="pretty p-switch p-fill">
+                      <input type="checkbox" name='type' id='search_type'>
+                      <div class="state p-primary">
+                        <label>Employee Search</label>
+                      </div>
+                    </div>
               </form>
             </li>
           </ul>
         </div>
+        
         <ul class="navbar-nav navbar-right">
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
               class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
@@ -201,18 +209,24 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>New Course</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{% url 'add-course' %}">Add New Course</a></li>                <li><a class="nav-link" href="#">Update Existing Branch Fees</a></li>
-                <li><a class="nav-link" href="blog.html">Blog</a></li>
-                <li><a class="nav-link" href="calendar.html">Calendar</a></li>
+                
               </ul>
             </li>
             <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Departments</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{% url 'add-department' %}">Add New Department</a></li>
+                <li><a class="nav-link" href="{% url 'department-list'%}">Delete A Department</a></li>
+              </ul>
+            </li>
+            <!-- <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Email</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="email-inbox.html">Inbox</a></li>
                 <li><a class="nav-link" href="email-compose.html">Compose</a></li>
                 <li><a class="nav-link" href="email-read.html">read</a></li>
               </ul>
-            </li><!-- 
+            </li> --><!-- 
             <li class="menu-header">UI Elements</li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Basic
@@ -407,5 +421,16 @@
   <script src="{% static 'assets/js/scripts.js'%}"></script>
   <!-- Custom JS File -->
   <script src="{% static 'assets/js/custom.js'%}"></script>
+  <script>
+    $('input[id=search_type]').change(function() {
+      if ($(this).is(':checked')) {
+        document.getElementById('search_form').action="{% url 'r-update-employee'%}"
+        console.log("Checkbox is checked..")
+      } else {
+         document.getElementById('search_form').action="{% url 'update-stu'%}"
+        console.log("Checkbox is not checked..")
+      }
+    });
+  </script>
 </body>
 </html>

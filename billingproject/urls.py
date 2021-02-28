@@ -30,7 +30,7 @@ urlpatterns = [
     path('update_student/<str:slug>', views.update_student),
     path('add_student',views.add_detail),
     path('emp_detail',views.emp_details),
-    path('update2_stu',views.update_stu),
+    path('update2_stu',views.update_stu, name='update-stu'),
     path('update3',views.update3),
     path('userlogin',views.loginuser),
     path('logoutuser',views.logoutuser),

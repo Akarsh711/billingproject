@@ -68,29 +68,22 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Course</label>
                         <div class="col-sm-9">
-                         <select class="custom-select" name="Course"> 
+                         <select class="custom-select" name="Course" id="course"> 
+                          <option value="" selected>__</option>
                           {% for i in courses %}
-                            {% if i.id == selected_course.id %}
-                              <option value="{i.id}" selected>{{i.course_name}}</option>
-                            {% else %}
-                              <option value="{{i.id}}">{{i.course_name}}</option>
-                            {% endif %}
+                            <option value="{{i.id}}">{{i.course_name}}</option>
                           {% endfor %}
                          </select>
                         </div>
                       </div>
-
+                    
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Branch</label>
                         <div class="col-sm-9">
-                         <select class="custom-select" name="Branch"> 
-                          {% for i in branches %}
-                            {% if i.id == selected_course.id %}
-                              <option value="{i.id}" selected>{{i.branch_name}}</option>
-                            {% else %}
-                              <option value="{{i.id}}">{{i.branch_name}}</option>
-                            {% endif %}
-                          {% endfor %}
+                         <select class="custom-select" name="Branch" id="branches"> 
+                        <!--     {% for i in branches %}
+                            <option value="{{i.id}}">{{i.branch_name}}</option>
+                          {% endfor %} -->
                          </select>
                         </div>
                       </div>
@@ -230,11 +223,49 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          <a>Created by -Tamanna Kamboj</a></a>
+          <a>Created by - </a></a>
         </div>
         <div class="footer-right">
         </div>
       </footer>
     </div>
   </div>
+
+
+   <script>
+    $('#course').change(function(){
+          $.ajax({
+            type :'POST',
+            dataType : 'json',
+            url : '/branch_search',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").attr("value"),
+                query : $('#course').val(),
+            },
+            success : function(data){
+                // alert('get the data from server'+data.branches[0]["name"]);
+                if(data.branches.length!=0){
+                  for(i = 0; i <data.branches.length; i++){
+                    // console.log()
+                    var x = document.getElementById("branches");
+                    for(j=x.options.length-1; j>=0; j--){
+                        x.remove(i);
+                    }
+                    var option = document.createElement("option");
+                    option.text = data.branches[i]["name"];
+                    option.value = data.branches[i]["id"];
+                    x.add(option);
+                  }
+                }
+                else{
+                 var x = document.getElementById("branches");
+                    for(j=x.options.length-1; j>=0; j--){
+                        x.remove(i);
+                    }
+                }
+            }
+        })
+    });
+  </script>
+
 {% endblock %}

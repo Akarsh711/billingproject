@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from .models import *
+from employee.models import Salaries
 from django.contrib.auth import authenticate,login,logout
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-
 
 # TODO 
     # Put Ajax
@@ -14,7 +14,9 @@ from django.shortcuts import redirect
 
 def home(request):
     if request.user.is_authenticated :
-        return render(request, 'index.html')
+        student_transaction = PaidFees.objects.all()
+        employee_transaction = Salaries.objects.all()
+        return render(request, 'index.html', {'s_transaction':student_transaction, 'e_transaction':employee_transaction})
     else :
         return HttpResponse('please login')
 
@@ -45,10 +47,6 @@ def add_student(request):
 # RETRIVE
 def student_detail(request, slug):
     obj = Student.objects.filter(rollno = slug)
-    # obj = [obj1, obj2]
-    # temp = obj[0]
-    # temp.rollno
-    # temp.name
     tam = obj[0]
 
     return HttpResponse(f'rollno:{tam.rollno}, name:{tam.name}this is slug -{slug}')
@@ -67,7 +65,6 @@ def update_student(request, slug):
         stu_name = request.POST.get('name')
         print(stu_name)
         rollno = request.POST.get('rollnumber')
-        
         obj = Student.objects.get(rollno = slug)
         obj.name = stu_name
         obj.rollno = rollno
@@ -115,8 +112,8 @@ def add_detail(request):
         return HttpResponse('added successfully')
 
     courses = Course.objects.all()
-    branches = Branch.objects.filter(course_name=courses[0])
-    return render(request,'basic-form.html', {'courses':courses, 'branches':branches})
+    
+    return render(request,'basic-form.html', {'courses':courses, 'branches':''})
 
 
 def update_stu(request):
@@ -128,10 +125,9 @@ def update_stu(request):
             messages.error(request, 'Student Not Found')
             return render(request, 'index.html')
         courses = Course.objects.all()
-        branches = Branch.objects.filter(course_name=courses[0])
+        
         return render(request,'update-student-form.html',{'tam':obj, 
                                                         'courses':courses,
-                                                        'branches':branches,
                                                         'selected_branch':obj.branch,
                                                         'selected_course':obj.branch.course_name, 
                                                          'url':"/update3"})

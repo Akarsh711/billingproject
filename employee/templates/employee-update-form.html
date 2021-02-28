@@ -26,57 +26,63 @@
                 
               </div>
               <div class="col-12 col-md-6 col-lg-6">
-                <form method="POST" action="{% url 'add-employee'%}">
+                <form method="POST" action="{% url 'update-employee'%}">
                   <div class="card">
                     <div class="card-header">
-                      <h4>ADD Employee Details</h4>{%csrf_token%}
+                      <h4>Update Employee Details</h4>{%csrf_token%}
                     </div>
-                    
+                    <input name="id" type="hidden" value="{{emp.employee_id}}">
                     <div class="card-body">
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Name</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="name" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="name" value="{{emp.name}}">
                         </div>
                       </div>
                          <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Father's Name</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="f_name" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="f_name" value="{{emp.f_name}}">
                         </div>
                       </div>
                        <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Date Of Birth</label>
                         <div class="col-sm-9">
-                          <input type="Date" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{tam.dateOfBirth}}">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{emp.dob}}">
                         </div>
                       </div>
                        <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Department</label>
                         <div class="col-sm-9">
                          <select class="custom-select" name="Department" id="department"> 
-                          <option value="" selected>__</option>
+                          
                           {% for i in departments %}
-                            <option value="{{i.id}}">{{i.name}}</option>
+                            {% if i.id == emp.department.id %}
+                            <option value="{{i.id}}" selected="">{{i.name}}</option>
+                            {% else %}
+                            <option value="{{i.id}}" selected="">{{i.name}}</option>
+                            {% endif %}
                           {% endfor %}
                          </select>
                         </div>
                       </div>
+                      
                        <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Designation</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="designation" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="designation" value="{{emp.designation}}">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Salary</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="salary" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="salary" value="{{emp.salary}}">
                         </div>
+                      </div>
                         <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label" >Address</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="address" value="">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Enter Employee Name" name="address" value="{{emp.address}}">
                         </div>
                       </div>
                     </div>
