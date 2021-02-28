@@ -27,7 +27,7 @@ class Student(models.Model):
     stu_class = models.CharField(max_length = 23)
     f_name= models.CharField(max_length = 23)
     m_name= models.CharField(max_length = 23)
-    dateOfBirth = models.DateTimeField()
+    dateOfBirth = models.CharField(max_length=12)
     address = models.TextField()
     # course = models.ForeignKey(Course,  on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)

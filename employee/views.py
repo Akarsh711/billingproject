@@ -90,6 +90,9 @@ def emp_search(request):
 	if request.method == 'POST':
 		emp_id = request.POST.get('id')
 		emp = Employee.objects.filter(employee_id = emp_id).first()
+		if emp == None:
+			messages.error(request, 'Employee Not Found')
+			return render(request, 'emp-search-form.html')
 		return render(request, 'emp-salary-form.html', {'emp':emp})
 	return render(request, 'emp-search-form.html')
 

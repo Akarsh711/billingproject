@@ -26,8 +26,10 @@ urlpatterns = [
     # CRUD
     path('student_detail/<str:slug>',views.student_detail),
     path('add_student2', views.add_student),
-    path('delete_student', views.delete_student),
+    # path('delete_student', views.delete_student),
+    path('delete_student/<int:slug>', views.delete_student, name='delete-student'),
     path('update_student/<str:slug>', views.update_student),
+    path('update_stu_with_rollno', views.update_stu_with_rollno, name='update-stu-with-rollno'),
     path('add_student',views.add_detail),
     path('emp_detail',views.emp_details),
     path('update2_stu',views.update_stu, name='update-stu'),

@@ -51,14 +51,7 @@ def student_detail(request, slug):
 
     return HttpResponse(f'rollno:{tam.rollno}, name:{tam.name}this is slug -{slug}')
 
-def delete_student(request):
-    if request.method == 'POST':
 
-        stu_rollno = request.POST.get('rollnumber')
-        obj = Student.objects.filter(rollno = stu_rollno)
-        obj.delete()
-        return HttpResponse('User Deleted Successfully sayad')
-    return render(request, 'delete-student.html')
 
 def update_student(request, slug):
     if request.method == "POST":
@@ -93,10 +86,13 @@ def emp_details(request):
     return render(request,'emp-details.html')
 
 
+# --------------------------------------------------------------------------
+
 def add_detail(request):
     if request.method=='POST':
         # TODO 
-            # Add Roll Number Check
+            # Add Roll Number Check ..Done
+
         name=request.POST.get('name')
         rollno=request.POST.get('rollno')
         email=request.POST.get('email')
@@ -106,20 +102,26 @@ def add_detail(request):
         dob=request.POST.get('dob')
         branch_id = request.POST.get('Branch')
         branch = Branch.objects.filter(id=branch_id).first()
+        if Student.objects.filter(rollno = rollno).exists():
+            courses = Course.objects.all()
+            messages.error(request, 'student already exist')
+            return render(request,'basic-form.html', {'courses':courses,})
+
         print('...........', branch)
         obj=Student(name=name,rollno=rollno,email=email,f_name=fname,m_name=mname,address=address,dateOfBirth=dob,stu_class='1', branch=branch )
         obj.save()
-        return HttpResponse('added successfully')
-
+        courses = Course.objects.all()
+        messages.success(request, f'Student Added Successfully to Database, Your unique id is : {obj.id}')
+        return render(request,'basic-form.html', {'courses':courses,})
+      
     courses = Course.objects.all()
-    
-    return render(request,'basic-form.html', {'courses':courses, 'branches':''})
+    return render(request,'basic-form.html', {'courses':courses,})
 
 
-def update_stu(request):
+def update_stu(request): 
     if request.method=='POST':
-        roll_no=request.POST.get('search')
-        obj=Student.objects.filter(rollno=roll_no).first()
+        u_id=request.POST.get('search')
+        obj=Student.objects.filter(id=u_id).first()
         if obj == None :
             print('......chala')
             messages.error(request, 'Student Not Found')
@@ -133,6 +135,25 @@ def update_stu(request):
                                                          'url':"/update3"})
     return render(request,'index.html')
 
+def update_stu_with_rollno(request):
+    if request.method=='POST':
+        roll_no = request.POST.get('rollno')
+        branch = request.POST.get('Branch')
+        obj = Student.objects.filter(branch__id = branch).filter(rollno = roll_no).first()
+        if obj == None :
+            print('......chala')
+            messages.error(request, 'Student Not Found')
+            return render(request, 'index.html')
+
+        courses = Course.objects.all()
+        return render(request,'update-student-form.html',{'tam':obj, 
+                                                        'courses':courses,
+                                                        'selected_branch':obj.branch,
+                                                        'selected_course':obj.branch.course_name, 
+                                                         'url':"/update3"})
+    courses = Course.objects.all()
+    branches = Branch.objects.all()
+    return render(request, 'student-search-form.html', {'courses':courses, 'branches':branches})
 
 def update3(request):
     if request.method=='POST':
@@ -145,7 +166,6 @@ def update3(request):
         dob=request.POST.get('dob')
         branch_id = request.POST.get('Branch')
         branch = Branch.objects.filter(id=branch_id).first()
-
         obj=Student.objects.filter(rollno=rollno).first()
         obj.name=name
         obj.rollno=rollno
@@ -158,6 +178,12 @@ def update3(request):
         obj.save()
         return HttpResponse('data is updated successfully')
 
+def delete_student(request, slug):
+    Student.objects.filter(id=slug).delete()
+    courses = Course.objects.all()
+    branches = Branch.objects.all()
+    messages.success(request, 'Student Deleted Successfully')
+    return render(request, 'student-search-form.html', {'courses':courses, 'branches':branches})
 
 def loginuser(request):
     if request.method=='POST':

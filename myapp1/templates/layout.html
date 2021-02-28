@@ -4,6 +4,7 @@
 {%load static%}
 
 <!-- index.html  21 Nov 2019 03:44:50 GMT -->
+
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -12,19 +13,20 @@
   <link rel="stylesheet" href="{% static 'assets/css/app.min.css'%}">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{% static 'assets/bundles/pretty-checkbox/pretty-checkbox.min.css'%}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>=-0iud Ion                         
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>=-0iud Ion
   <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
   <link rel="stylesheet" href="{% static 'assets/css/components.css'%}">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{% static 'assets/css/custom.css'%}">
-  <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/favicon.ico'%}"/>
+  <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/favicon.ico'%}" />
 </head>
+
 <body>
- <div class="loader"></div>
+  <div class="loader"></div>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-<nav class="navbar navbar-expand-lg main-navbar sticky">
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
@@ -33,25 +35,26 @@
                 <i data-feather="maximize"></i>
               </a></li>
             <li>
-              <form class="form-inline mr-auto" action ='/update2_stu' method='POST' id='search_form'>
+              <form class="form-inline mr-auto" action='/update2_stu' method='POST' id='search_form'>
                 {%csrf_token%}
                 <div class="search-element">
-                  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search" data-width="200">
+                  <input class="form-control" type="search" placeholder="Search By Id" name="search" aria-label="Search"
+                    data-width="200">
                   <button class="btn" type="submit">
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
                 <div class="pretty p-switch p-fill">
-                      <input type="checkbox" name='type' id='search_type'>
-                      <div class="state p-primary">
-                        <label>Employee Search</label>
-                      </div>
-                    </div>
+                  <input type="checkbox" name='type' id='search_type'>
+                  <div class="state p-primary">
+                    <label>Employee Search</label>
+                  </div>
+                </div>
               </form>
             </li>
           </ul>
         </div>
-        
+
         <ul class="navbar-nav navbar-right">
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
               class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
@@ -164,8 +167,9 @@
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src=" {% static 'assets/img/user.png'%}" 
-                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
+                src=" {% static 'assets/img/user.png'%}" class="user-img-radious-style"> <span
+                class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello Sarah Smith</div>
               <a href="profile.html" class="dropdown-item has-icon"> <i class="far
@@ -196,24 +200,26 @@
               <a href="/" class="nav-link"><i data-feather="home"></i><span>Home</span></a>
             </li>
             <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Add or Update a Branch</span></a>
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>New
+                  Course</span></a>
               <ul class="dropdown-menu">
-                
+                <li><a class="nav-link" href="{% url 'add-course' %}">Add New Course</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Add or Update a
+                  Branch</span></a>
+              <ul class="dropdown-menu">
+
                 <li><a class="nav-link" href="{% url 'add-branch' %}">Add New Branch</a></li>
                 <!-- <li><a class="nav-link" href="{% url 'add-course-detail' %}">Add Branch Fees</a></li> -->
                 <li><a class="nav-link" href="{% url 'r-update-course' %}">Update an Branch Fees</a></li>
               </ul>
             </li>
+            
             <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>New Course</span></a>
-              <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{% url 'add-course' %}">Add New Course</a></li>                <li><a class="nav-link" href="#">Update Existing Branch Fees</a></li>
-                
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Departments</span></a>
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                  data-feather="command"></i><span>Departments</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{% url 'add-department' %}">Add New Department</a></li>
                 <li><a class="nav-link" href="{% url 'department-list'%}">Delete A Department</a></li>
@@ -226,7 +232,8 @@
                 <li><a class="nav-link" href="email-compose.html">Compose</a></li>
                 <li><a class="nav-link" href="email-read.html">read</a></li>
               </ul>
-            </li> --><!-- 
+            </li> -->
+            <!-- 
             <li class="menu-header">UI Elements</li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Basic
@@ -394,43 +401,44 @@
                     <li><a href="#"> Child Menu 3</a></li>
                   </ul>
                 </li> -->
-              </ul>
-            </li>
+          </ul>
+          </li>
           </ul>
         </aside>
       </div>
 
 
 
-{% block body %}
+      {% block body %}
 
-{% endblock %}
-
-
+      {% endblock %}
 
 
 
-   <!-- General JS Scripts -->
-}
-  <script src="{% static 'assets/js/app.min.js'%}"></script>
-  <!-- JS Libraies -->
-  <script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js'%}"></script>
-  <!-- Page Specific JS File -->
-  <script src="{% static 'assets/js/page/index.js'%}"></script>
-  <!-- Template JS File -->
-  <script src="{% static 'assets/js/scripts.js'%}"></script>
-  <!-- Custom JS File -->
-  <script src="{% static 'assets/js/custom.js'%}"></script>
-  <script>
-    $('input[id=search_type]').change(function() {
-      if ($(this).is(':checked')) {
-        document.getElementById('search_form').action="{% url 'r-update-employee'%}"
-        console.log("Checkbox is checked..")
-      } else {
-         document.getElementById('search_form').action="{% url 'update-stu'%}"
-        console.log("Checkbox is not checked..")
+
+
+      <!-- General JS Scripts -->
       }
-    });
-  </script>
+      <script src="{% static 'assets/js/app.min.js'%}"></script>
+      <!-- JS Libraies -->
+      <script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js'%}"></script>
+      <!-- Page Specific JS File -->
+      <script src="{% static 'assets/js/page/index.js'%}"></script>
+      <!-- Template JS File -->
+      <script src="{% static 'assets/js/scripts.js'%}"></script>
+      <!-- Custom JS File -->
+      <script src="{% static 'assets/js/custom.js'%}"></script>
+      <script>
+        $('input[id=search_type]').change(function () {
+          if ($(this).is(':checked')) {
+            document.getElementById('search_form').action = "{% url 'r-update-employee'%}"
+            console.log("Checkbox is checked..")
+          } else {
+            document.getElementById('search_form').action = "{% url 'update-stu'%}"
+            console.log("Checkbox is not checked..")
+          }
+        });
+      </script>
 </body>
+
 </html>

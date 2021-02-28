@@ -8,7 +8,7 @@ from .models import*
 admin.site.register(Student)
 # admin.site.register(StudentFeesDetail)
 admin.site.register(Course)
-admin.site.register(Employee)
+# admin.site.register(Employee)
 admin.site.register(Branch)
 admin.site.register(BranchFees)
 admin.site.register(PaidFees)
