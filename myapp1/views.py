@@ -5,20 +5,17 @@ from django.contrib.auth import authenticate,login,logout
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-
+import datetime
 # TODO 
-    # Put Ajax
-    # Pay Fees
-    # Resolve Date Null
     # put check if student with rollno. exist 
 
 def home(request):
     if request.user.is_authenticated :
         student_transaction = PaidFees.objects.all()
         employee_transaction = Salaries.objects.all()
-        return render(request, 'index.html', {'s_transaction':student_transaction, 'e_transaction':employee_transaction})
+        return render(request, 'index.html', {'s_transaction':student_transaction, 'employee_transaction':employee_transaction})
     else :
-        return HttpResponse('please login')
+        return redirect('user-login')
 
 def form(request):
     name = request.POST.get('name1')
@@ -123,16 +120,36 @@ def update_stu(request):
         u_id=request.POST.get('search')
         obj=Student.objects.filter(id=u_id).first()
         if obj == None :
-            print('......chala')
             messages.error(request, 'Student Not Found')
             return render(request, 'index.html')
+
         courses = Course.objects.all()
-        
+        fees = PaidFees.objects.filter(student = obj).last()
+        fees_cycle = fees.branch.course_name.fees_cycle
+
+        if fees_cycle != 12:
+            if fees:
+                if(fees.session_month + fees_cycle)%12 <= datetime.date.today().month%12:
+                    status = 'unpaid'
+                else:
+                    status = 'paid'
+            else:
+                 status = 'not payed yet'
+        else:
+            print('ye else chal hai')
+            if fees:
+                if(fees.session_month + fees_cycle)%12 <= datetime.date.today().month%12 and fees.session_year+1 == 2022:
+                    status = 'unpaid'
+                else:
+                    status = 'paid'
+            else:
+                 status = 'not payed yet'
         return render(request,'update-student-form.html',{'tam':obj, 
                                                         'courses':courses,
                                                         'selected_branch':obj.branch,
                                                         'selected_course':obj.branch.course_name, 
-                                                         'url':"/update3"})
+                                                         'url':"/update3",
+                                                         'fees_paid':status,})
     return render(request,'index.html')
 
 def update_stu_with_rollno(request):
@@ -191,40 +208,47 @@ def loginuser(request):
         password=request.POST.get('password')
         user=authenticate(request, username=username, password=password)
         if user==None:
-            return HttpResponse('please enter correct details')
+            messages.error(request, 'Please Enter Correct Details')
+            return render(request,'user-login.html')
         else:
             login(request, user)
-            return HttpResponse('login successfully')
+            return redirect('home')
     return render(request,'user-login.html')
-
 
 def logoutuser(request):
     logout(request)
-    return HttpResponse('logout successfully')
+    return redirect('home')
 
 
 def fees_form(request):
-    try:
-        if request.method =='POST':
-            roll_no = request.POST.get('rollno')
-            branch = request.POST.get('Branch')
-            print('.....id', branch)
-            course = request.POST.get('Course')
-            obj1 = BranchFees.objects.filter(branch__id = branch).first()
-            total = obj1.fees + obj1.tution_fees + obj1.exam_fees + obj1.library_charges
-            obj2 = Student.objects.filter(rollno = roll_no).filter(branch = obj1.branch).first()
-            if obj2 == None:
-                print('dfdfd')
-                courses = Course.objects.all()
-                branches = Branch.objects.all()
-                messages.error(request,'Student Not Found')
-                return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
-            return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
-        courses = Course.objects.all()
-        branches = Branch.objects.all()
-        return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
-    except:
-        return HttpResponse('Wrong Input Passed')
+    # try:
+    if request.method =='POST':
+        roll_no = request.POST.get('rollno')
+        branch = request.POST.get('Branch')
+        print('.....id', branch)
+        course = request.POST.get('Course')
+        obj1 = BranchFees.objects.filter(branch__id = branch).first()
+        total = obj1.fees + obj1.tution_fees + obj1.exam_fees + obj1.library_charges
+        obj2 = Student.objects.filter(rollno = roll_no).filter(branch = obj1.branch).first()
+        if obj2 == None:
+            courses = Course.objects.all()
+            branches = Branch.objects.all()
+            messages.error(request,'Student Not Found')
+            return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
+            
+        return render(request, 'fees-form.html', {'fees_detail':obj1, 'student_detail':obj2, 'total':total})
+    courses = Course.objects.all()
+    branches = Branch.objects.all()
+    return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
+    # except:
+    #     return HttpResponse('Wrong Input Passed')
+
+def fees_form_with_rollno(request, slug):
+    courses = Course.objects.all()
+    branches = Branch.objects.all()
+    return render(request, 'student-fess-search.html', {'rollno':slug,'courses':courses, 'branches':branches})
+
+
 def pay_fees(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -237,8 +261,8 @@ def pay_fees(request):
         library_charges = request.POST.get('library_charges')
         late_charges = request.POST.get('late_charges')
         total = request.POST.get('total')
-
-        print('.........',name, rollno, f_name, dob, fees, tution_fees, exam_fees, library_charges, late_charges, total)
+        session_month = int(request.POST.get('Month'))
+        session_year =  int(request.POST.get('Year'))
 
         student = Student.objects.filter(rollno= rollno).first()
         fees_paid = PaidFees()
@@ -249,17 +273,22 @@ def pay_fees(request):
         fees_paid.exam_fee = exam_fees
         fees_paid.library_charges = library_charges
         fees_paid.total_fee = total
+        fees_paid.session_month = session_month
+        fees_paid.session_year = session_year
         fees_paid.save()
-        return HttpResponse('Fees Successfully Paid')
+        courses = Course.objects.all()
+        branches = Branch.objects.all()
+        messages.success(request, 'Fees Paid Successfully')
+        return render(request, 'student-fess-search.html', {'courses':courses, 'branches':branches})
     return HttpResponse('Bad Request')
-
     
 # Basic
 def add_course(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+        fees_cycle = request.POST.get('fees')
         duration = request.POST.get('duration')
-        Course(course_name = name, duration = duration).save()
+        Course(course_name = name,fees_cycle=fees_cycle, duration = duration).save()
         messages.success(request, 'Course Added Successfully')
         return render(request, 'test.html')
     return render(request, 'test.html')

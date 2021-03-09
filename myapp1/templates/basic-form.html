@@ -242,9 +242,8 @@
       </footer>
     </div>
   </div>
-
-
    <script>
+    
     $('#course').change(function(){
           $.ajax({
             type :'POST',
@@ -255,10 +254,8 @@
                 query : $('#course').val(),
             },
             success : function(data){
-                // alert('get the data from server'+data.branches[0]["name"]);
                 if(data.branches.length!=0){
                   for(i = 0; i <data.branches.length; i++){
-                    // console.log()
                     var x = document.getElementById("branches");
                     for(j=x.options.length-1; j>=0; j--){
                         x.remove(i);
@@ -278,6 +275,7 @@
             }
         })
     });
+
   </script>
 
 {% endblock %}

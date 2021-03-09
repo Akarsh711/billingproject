@@ -44,7 +44,7 @@
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Date Of Birth</label>
                         <div class="col-sm-9">
-                          <input type="Date" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{student_detail.dateOfBirth}}">
+                          <input type="text" class="form-control" id="inputEmail3" placeholder="Date Of Birth" name="dob" value="{{student_detail.dateOfBirth}}">
                         </div>
                       </div>
                      </div>
@@ -95,7 +95,33 @@
                           <input type="text" id="total" class="form-control" id="inputEmail3" placeholder="Total " name="total" value="{{total}}">
                         </div>
                       </div>
+
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Session Date</label>
+                        <div class="col-sm-9">
+                         <select class="custom-select" name="Month" id="month"  style="width:30%"> 
+                            <option value="" selected="">_</option>
+                            <option value="1">Januaray</option>
+                            <option value="2">Feburary</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">Septemberr</option>
+                            <option value="10">October</option>
+                            <option value="11">Novemember</option>
+                            <option value="12">December</option>
+                         </select>
+
+                         <select class="custom-select" name="Year" id="year"  style="width:30%"> 
+                            <option value='{% now "Y" %}' selected>{% now "Y" %}</option>
+                         </select>
+                        </div>
+                      </div>
                     </div>
+
 
                       <!-- <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>

@@ -34,10 +34,11 @@ urlpatterns = [
     path('emp_detail',views.emp_details),
     path('update2_stu',views.update_stu, name='update-stu'),
     path('update3',views.update3),
-    path('userlogin',views.loginuser),
-    path('logoutuser',views.logoutuser),
+    path('userlogin',views.loginuser, name='user-login'),
+    path('logoutuser',views.logoutuser, name='logout'),
 
     # Fees Pay Urls
     path('fees_form' ,views.fees_form, name='fees-form'),
+    path('fees_form/<int:slug>', views.fees_form_with_rollno, name='fees-form-rollno'),
     path('pay_fees', views.pay_fees),
 ]
