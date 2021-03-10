@@ -13,7 +13,7 @@
               <button class="close" data-dismiss="alert">
                 <span>&times;</span>
               </button>
-               {{message}}what!
+               {{message}}
             </div>
           </div>
           {% endfor %}
@@ -28,7 +28,7 @@
                 <form method="POST" action=/fees_form >
                   <div class="card">
                     <div class="card-header">
-                      <h4>ADD STUDENT DETAILS</h4>{%csrf_token%}
+                      <h4>SEARCH STUDENT</h4>{%csrf_token%}
                       <input name ='rollno1' value= "{{tam.rollno}}" type='hidden'>
                     </div>
                     
