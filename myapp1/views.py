@@ -193,7 +193,7 @@ def update3(request):
         obj.dob=dob
         obj.branch=branch
         obj.save()
-        return HttpResponse('data is updated successfully')
+        return HttpResponse('data is updated successfully <a href="/">home>></a>')
 
 def delete_student(request, slug):
     Student.objects.filter(id=slug).delete()
@@ -286,7 +286,7 @@ def pay_fees(request):
             'Payment Reciept',
             '',
             'paliwalap7@gmail.com',
-            ['paliwalbunny29@gmail.com'],
+            [student.email],
             fail_silently=False,
             html_message=html_message,
         )
