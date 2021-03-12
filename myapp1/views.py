@@ -276,6 +276,20 @@ def pay_fees(request):
         fees_paid.session_month = session_month
         fees_paid.session_year = session_year
         fees_paid.save()
+        from django.core.mail import send_mail
+        from django.template.loader import render_to_string
+
+        message = f''''''
+        html_message = render_to_string('mail-template.html', {'fees':fees_paid})
+
+        send_mail(
+            'Payment Reciept',
+            '',
+            'paliwalap7@gmail.com',
+            ['paliwalbunny29@gmail.com'],
+            fail_silently=False,
+            html_message=html_message,
+        )
         courses = Course.objects.all()
         branches = Branch.objects.all()
         messages.success(request, 'Fees Paid Successfully')
